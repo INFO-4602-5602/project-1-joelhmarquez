@@ -4,7 +4,7 @@
 <style type="text/css" href="project0.css"></style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!--Put your D3 import statement between these two lines-->
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
 <!--Put your D3 import statement between these two lines-->
 </head>
 
@@ -35,6 +35,25 @@
     
     <script type="text/javascript">
         // Put your part one code here ***********************
+        a1 = d3.csv("data/anscombe_I.csv", function (error, data) {
+            checkDataset(data);
+            console.log("anscombe_I: ", data)
+        });
+
+        a2 = d3.csv("data/anscombe_I.csv", function (error, data) {
+            checkDataset(data);
+            console.log("anscombe_II: ", data)
+        });
+
+        a3 = d3.csv("data/anscombe_I.csv", function (error, data) {
+            checkDataset(data);
+            console.log("anscombe_III: ", data)
+        });
+
+        a4 = d3.csv("data/anscombe_I.csv", function (error, data) {
+            checkDataset(data);
+            console.log("anscombe_IV: ", data)
+        });
 
         
         // Leave this to test your data uploading. All data uploading should be above this line
