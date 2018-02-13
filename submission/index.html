@@ -34,22 +34,26 @@
 	</div>
     
     <script type="text/javascript">
-        // Global vars
-        // set the dimensions and margins of the graph
-        var margin = {top: 20, right: 20, bottom: 30, left:50};
-        var width = 960 - margin.left - margin.right;
-        var height = 500 - margin.top - margin.bottom;
+        // Put your part one code here ***********************
+        a1 = d3.csv("data/anscombe_I.csv", function (error, data) {
+            checkDataset(data);
+            console.log("anscombe_I: ", data)
+        });
 
-        // set the ranges
-        var x = d3.scaleLinear().range([0, width]);
-        var y = d3.scaleLinear().range([height, 0]);
+        a2 = d3.csv("data/anscombe_I.csv", function (error, data) {
+            checkDataset(data);
+            console.log("anscombe_II: ", data)
+        });
 
-        var keys = {"I": [], "II": [], "III": [], "IV": []};
+        a3 = d3.csv("data/anscombe_I.csv", function (error, data) {
+            checkDataset(data);
+            console.log("anscombe_III: ", data)
+        });
 
-        var i;
-        for (i in keys) {
-            load_data("data/anscombe_" + keys[i] + ".csv", get_func(0))
-        }
+        a4 = d3.csv("data/anscombe_I.csv", function (error, data) {
+            checkDataset(data);
+            console.log("anscombe_IV: ", data)
+        });
 
         
         // Leave this to test your data uploading. All data uploading should be above this line
@@ -61,34 +65,11 @@
         }
         
         // Put your part two code here ***********************
-        var svg = d3.select("#barchart").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + ","  + margin.top + ")");
         
         // Put your part three & four code here ***********************
         
         // Put your part five code here ***********************
-
-
-
-
-        // Helper functions
-        function load_data(filename, func) {
-            d3.csv("data/anscombe_" + i +".csv", func);
-        }
-
-        function get_func(type){
-            if (type === 0){
-                return function (error, data) {
-                    checkDataset(data);
-                    console.log(data)
-                };
-            }
-        }
-
-
+        
     </script>
 </body>
 
