@@ -16,14 +16,15 @@
     
     <div id="partTwo">
         <h1>Part Two: </h1>
-        <div id="barchart">
+        </div>
+        <div id="scatterplot">
+            <p id="scatterLabel"></p>
         </div>
 	</div>
     
     <div id="partThree">
         <h1>Part Three &amp; Four: </h1>
-        <div id="scatterplot">
-            <p id="scatterLabel"></p>
+        <div id="linegraph">
         </div>
 	</div>
     
@@ -34,7 +35,7 @@
 	</div>
     
     <script type="text/javascript">
-        // Global vars
+        // Global vars ***********************
         // set the dimensions and margins of the graph
         var margin = {top: 20, right: 20, bottom: 30, left:50};
         var width = 960 - margin.left - margin.right;
@@ -44,13 +45,13 @@
         var x = d3.scaleLinear().range([0, width]);
         var y = d3.scaleLinear().range([height, 0]);
 
-        var keys = {"I": [], "II": [], "III": [], "IV": []};
+        var xVal = "x";
+        var yVal = "y";
 
-        var i;
-        for (i in keys) {
-            load_data("data/anscombe_" + keys[i] + ".csv", get_func(0))
-        }
+        // Put your part One code here ***********************
+        const keys = new Set(["I", "II", "III", "IV"]);
 
+        load_data(keys);
         
         // Leave this to test your data uploading. All data uploading should be above this line
         function checkDataset(dataset) {
@@ -61,33 +62,140 @@
         }
         
         // Put your part two code here ***********************
-        var svg = d3.select("#barchart").append("svg")
+        var scatterplot = d3.select("#scatterplot").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + ","  + margin.top + ")");
+
+        load_and_plot(scatterplot, "I", "scatter");
         
         // Put your part three & four code here ***********************
-        
+        var linegraph = d3.select("#linegraph").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + ","  + margin.top + ")");
+
+        load_and_plot(linegraph, "I", "line");
+
         // Put your part five code here ***********************
 
 
 
 
         // Helper functions
-        function load_data(filename, func) {
-            d3.csv("data/anscombe_" + i +".csv", func);
-        }
+        function load_data(keys) {
+            keys.forEach(function (key) {
+                d3.csv("data/anscombe_" + key + ".csv", function (error, data) {
+                    if (error) throw error;
 
-        function get_func(type){
-            if (type === 0){
-                return function (error, data) {
                     checkDataset(data);
-                    console.log(data)
-                };
-            }
+//                    console.log(data)
+                })
+            });
         }
 
+        function load_and_plot(svg, key, plottype) {
+            d3.csv("data/anscombe_" + key + ".csv", function (error, data) {
+                if (error) throw error;
+
+                fix_data(data);
+
+                // Scale the range of the data
+                x.domain(d3.extent(data, function (d) {
+                    return parseFloat(d[xVal]);
+                }));
+                y.domain([0, d3.max(data, function (d) {
+                    return parseFloat(d[yVal]);
+                })]);
+
+                plot_points(svg, data, plottype);
+
+                // Add the X Axis
+                svg.append("g")
+                    .attr("transform", "translate(0, " + height + ")")
+                    .call(d3.axisBottom(x));
+
+                // Add the Y axis
+                svg.append("g")
+                    .call(d3.axisLeft(y));
+
+                // Add text labels
+                var xLabel = svg.append("text")
+                    .attr("class", "label")
+                    .text(xVal)
+                    .attr("x", width -20)
+                    .attr("y", height - 10);
+
+                var yLabel = svg.append("text")
+                    .attr("class", "label")
+                    .text(yVal)
+                    .attr("x", 10)
+                    .attr("y", -10);
+
+            })
+        }
+
+        function plot_points(svg, data, plottype) {
+            if (plottype === "scatter") {return build_scatter(svg, data)}
+            if (plottype === "line") {return build_line(svg, data)}
+        }
+
+
+        function build_scatter(svg, data) {
+            // Add the scatterplot points
+            svg.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("r", 5)
+                .attr("cx", function (d) {
+                    return x(d[xVal])
+                })
+                .attr("cy", function (d) {
+                    return y(d[yVal])
+                })
+                .attr("fill", "blue")
+                .on("click", function (d) {
+                    d3.select("#scatterlabel")
+                        .text("x: " + d[xVal] + " y: " + d[yVal])
+                })
+                .on("mouseover", function(d) {
+                    d3.select(this).attr("r", 5).style("fill", "red");
+                })
+                .on("mouseout", function(d) {
+                    d3.select(this).attr("r", 5).style("fill", "blue");
+                });
+        }
+
+        function build_line(svg, data) {
+            var	line = d3.line()
+                .x(function(d) { return x(d[xVal]); })
+                .y(function(d) { return y(d[yVal]); });
+
+            svg.append("path")
+                .datum(data)
+                .attr("fill", "none")
+                .attr("stroke", "blue")
+                .attr("stroke-linejoin", "round")
+                .attr("stroke-linecap", "round")
+                .attr("stroke-width", 1.5)
+                .attr("d", line)
+        }
+
+        function fix_data(data) {
+            // Convert all strings to floats
+            data.forEach(function (entry) {
+                entry[xVal] = parseFloat(entry[xVal]);
+                entry[yVal] = parseFloat(entry[yVal]);
+            });
+
+            // Sort data, reference: http://www.javascriptkit.com/javatutors/arraysort2.shtml
+            data.sort(function (a, b) {
+                return a[xVal]-b[xVal]
+            });
+        }
 
     </script>
 </body>

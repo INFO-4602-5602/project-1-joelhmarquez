@@ -31,8 +31,15 @@ To test if this is working, make sure your server is running and open your brows
 <h3>Part 2: Building Scatterplots</h3>
 Under Part Two in index.html, create a line graph using one of the four datasets (your choice of which one). Scatterplots should have both an x- and y-axis, and the data should be scaled according to the maximum y-value in the dataset. Please use the d3.max function to create this scale rather than hard-coding a specific value. Look at the in-class tutorial for an example of how to do this.  Note that you will need to load the dataset you’re using prior to building the visualization.  
 
+* In order to calculate the domains of the x and y axis, I manipulated the data to convert the x and y from strings to floats
+
 <h3>Part 3: Building Line Graphs</h3>
 Under Part Three in index.html, visualize the same dataset you used in Part 2 using a line graph. Map x to the x-axis and y to the y-axis. As with the scatterplot, you should include axes and scale your visualization to fit the maximum values in the data. 
+
+
+* For this part, I sorted the data based on the x value so the line wouldn't be all over the place.
+I referenced: http://www.javascriptkit.com/javatutors/arraysort2.shtml for the sorting comparison function
+* I also referenced https://bl.ocks.org/mbostock/3883245 to learn to draw a line graph using d3
 
 <h3>Part 4: Interaction</h3>
 Update your scatterplot code to be interactive. When you click on a point, change the paragraph with the id scatterLabel to print out the x and y values of that point. When you hover over a point, change it’s color (and change it back when you mouse out!). 
