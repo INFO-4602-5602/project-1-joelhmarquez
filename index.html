@@ -72,17 +72,15 @@
         load_and_plot(linegraph, "I", "line");
 
         // Put your part five code here ***********************
-        var scatterplotI = generate_svg("#scatterplotSet");
-        var scatterplotII = generate_svg("#scatterplotSet");
-        var scatterplotIII = generate_svg("#scatterplotSet");
-        var scatterplotIV = generate_svg("#scatterplotSet");
+        var scatterplotset = {"I": 0, "II": 0, "III": 0, "IV": 0};
 
-        load_and_plot(scatterplotI, "I", "scatter");
-        load_and_plot(scatterplotII, "II", "scatter");
-        load_and_plot(scatterplotIII, "III", "scatter");
-        load_and_plot(scatterplotIV, "IV", "scatter");
+        for (i in scatterplotset){
+            scatterplotset[i] = generate_svg("#scatterplotSet");
 
-        // Helper functions
+            load_and_plot(scatterplotset[i], i, "scatter");
+        }
+
+        // Helper functions ***********************
         function generate_svg(location){
             return d3.select(location).append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -97,7 +95,7 @@
                     if (error) throw error;
 
                     checkDataset(data);
-//                    console.log(data)
+                    //console.log(data)
                 })
             });
         }
