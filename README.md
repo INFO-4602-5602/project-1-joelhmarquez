@@ -44,6 +44,8 @@ I referenced: http://www.javascriptkit.com/javatutors/arraysort2.shtml for the s
 <h3>Part 4: Interaction</h3>
 Update your scatterplot code to be interactive. When you click on a point, change the paragraph with the id scatterLabel to print out the x and y values of that point. When you hover over a point, change it’s color (and change it back when you mouse out!). 
 
+* Quicknote: It looks like the scatterplot and scatterLabel tags where in the location of part 3 (linegraph) so I moved them back to part 2 (scatterplot) since it seems that's where the interaction for this part wants to happen
+
 <h3>Part 5: Building Multiple Charts </h3>
 Under Part Five, create a set of four side-by-side scatterplots, one for each data value. Add a label to each scatterplot that identifies which of the four datasets is being visualized (“Anscombe I”, “Anscombe II”, “Anscombe III”, “Anscombe IV”). 
 

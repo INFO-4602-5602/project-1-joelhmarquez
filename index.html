@@ -62,29 +62,35 @@
         }
         
         // Put your part two code here ***********************
-        var scatterplot = d3.select("#scatterplot").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + ","  + margin.top + ")");
+        var scatterplot = generate_svg("#scatterplot");
 
         load_and_plot(scatterplot, "I", "scatter");
         
         // Put your part three & four code here ***********************
-        var linegraph = d3.select("#linegraph").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + ","  + margin.top + ")");
+        var linegraph = generate_svg("#linegraph");
 
         load_and_plot(linegraph, "I", "line");
 
         // Put your part five code here ***********************
+        var scatterplotI = generate_svg("#scatterplotSet");
+        var scatterplotII = generate_svg("#scatterplotSet");
+        var scatterplotIII = generate_svg("#scatterplotSet");
+        var scatterplotIV = generate_svg("#scatterplotSet");
 
-
-
+        load_and_plot(scatterplotI, "I", "scatter");
+        load_and_plot(scatterplotII, "II", "scatter");
+        load_and_plot(scatterplotIII, "III", "scatter");
+        load_and_plot(scatterplotIV, "IV", "scatter");
 
         // Helper functions
+        function generate_svg(location){
+            return d3.select(location).append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + ","  + margin.top + ")");
+        }
+
         function load_data(keys) {
             keys.forEach(function (key) {
                 d3.csv("data/anscombe_" + key + ".csv", function (error, data) {
@@ -133,6 +139,14 @@
                     .text(yVal)
                     .attr("x", 10)
                     .attr("y", -10);
+
+                // Title for plot, reference: http://www.d3noob.org/2013/01/adding-title-to-your-d3js-graph.html
+                svg.append("text")
+                    .attr("x", (width/2))
+                    .attr("y", 0 - (margin.top / 2))
+                    .attr("text-anchor", "middle")
+                    .style("font-size", "15px")
+                    .text("Anscombe " + key)
 
             })
         }
