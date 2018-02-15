@@ -1,7 +1,7 @@
 Joel Marquez
 Project 1
 
-** NOTE: I finished the project on time as you can see by the commit timestamps, and all the code is also in the "index.html" file outside this directory with the last commit dating to two days ago. However, I just realized that when I did my final commit, I forgot to "git add" the submission folder which has all the code condensed into this directory. I apologize about this late commit, it is only to push the submission folder up."
+** NOTE: I finished the project on time as you can see by the commit timestamps, and all the code is also in the "index.html" file outside this directory with the last commit dating to two days ago. However, I just realized that when I did my final push, I forgot to "git add" the submission folder which has all the code condensed into this directory. I apologize about this late commit, it is only to push the submission folder up."
 
 Part 1: Interpreting Data
 
